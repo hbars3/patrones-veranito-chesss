@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
  */
 public class ChessGameEngine{
     private ChessGamePiece currentPiece;
+		//private ChessGamePiece currentPieceVisitada;
     private boolean        firstClick;
     private int            currentPlayer;
     private ChessGameBoard board;
@@ -244,12 +245,46 @@ public class ChessGameEngine{
     public void determineActionFromSquareClick( MouseEvent e ){
         BoardSquare squareClicked = (BoardSquare)e.getSource();
         ChessGamePiece pieceOnSquare = squareClicked.getPieceOnSquare();
+				//ChessGamePiece pieceOnSquares = PieceOnSquare();
         board.clearColorsOnBoard();
         if ( firstClick ){
             currentPiece = squareClicked.getPieceOnSquare();
+						String msg = "";
+						switch ( currentPiece.toString() ){
+							case "Pawn": 
+								msg = "Solo puedes avanzar una casilla hacia delante o dos si es tu primer movimiento. "
+												+ "Puedes capturar una pieza rival si la tienes en tu esquina superior (izq o der)";
+								break;
+							case "Knight":
+								msg = "Solo puedes moverte 2 casillas hacia delante o atras y una más en un ángulo de 90°";
+								break;
+							case "Rook":
+								msg = "Solo puedes moverte hacia adelante, atras o hacia los lados, pero tantas casillas como desees";
+								break;
+							case "Bishop":
+								msg = "Solo puedes moverte en diagonal, pero tantas casillas como desees";
+								break;
+							case "Queen":
+								msg = "Puedes moverte en cualquier dirección y tantas casillas como desees";
+								break;
+							case "King":
+								msg = "Solo puedes moverte una casilla, pero en cualquier dirección, atento con las amenazas ya "
+												+ "que restringirán tus posibles movimientos";
+								break;
+							default:
+								msg = "asdsadas";
+						}
+				//		currentPieceVisitada = getPieceOnSquare();
             if ( selectedPieceIsValid() ){
                 currentPiece.showLegalMoves( board );
                 squareClicked.setBackground( Color.GREEN );
+								JOptionPane.showMessageDialog(
+                        squareClicked,
+														 " Hola "
+                            +( currentPiece ) 
+                            + " "+ msg ,
+                        "Hola Visitante",
+                        JOptionPane.INFORMATION_MESSAGE );
                 firstClick = false;
             }
             else
@@ -278,7 +313,7 @@ public class ChessGameEngine{
             if ( pieceOnSquare == null ||
                 !pieceOnSquare.equals( currentPiece ) ) // moving
             {
-                boolean moveSuccessful =
+               /* boolean moveSuccessful =
                     currentPiece.move(
                         board,
                         squareClicked.getRow(),
@@ -299,8 +334,50 @@ public class ChessGameEngine{
                             + "and try using your brain this time!",
                         "Invalid move",
                         JOptionPane.ERROR_MESSAGE );
-                }
+                }*/
                 firstClick = true;
+								String Command = JOptionPane.showInputDialog(
+                        null,
+                        "Estas seguro de hacer ese movimiento?" );
+										switch(Command){
+											case "Yes":
+												boolean moveSuccessful =
+												currentPiece.move(
+                        board,
+                        squareClicked.getRow(),
+                        squareClicked.getColumn() );
+													if ( moveSuccessful ){
+														checkGameConditions();
+													}
+													else
+													{
+														int row = squareClicked.getRow();
+														int col = squareClicked.getColumn();
+														JOptionPane.showMessageDialog(
+														squareClicked,
+														"The move to row " + ( row + 1 ) + " and column "
+                            + ( col + 1 )
+                            + " is either not valid or not legal "
+                            + "for this piece. Choose another move location, "
+                            + "and try using your brain this time!",
+														"Invalid move",
+														JOptionPane.ERROR_MESSAGE );
+													}
+													firstClick = true;
+													break;
+											
+											case "No":
+												JOptionPane.showMessageDialog(
+                        squareClicked,
+                        "Haga su movimiento"
+                            + "",
+                        "",
+                        JOptionPane.ERROR_MESSAGE );
+												break;
+												
+											default:
+												JOptionPane.showMessageDialog(null,"respuesta no válida");
+										}
             }
             else
             // user is just unselecting the current piece

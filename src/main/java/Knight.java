@@ -90,28 +90,9 @@ public class Knight
         }
         return moves;
     }
-    /**
-     * Creates an icon for this piece depending on the piece's color.
-     *
-     * @return ImageIcon the ImageIcon representation of this piece.
-     */
-    @Override
-    public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == ChessGamePiece.WHITE ){
-            return new ImageIcon(
-                getClass().getResource("chessImages/WhiteKnight.gif")
-            );            
-        }
-        else if ( getColorOfPiece() == ChessGamePiece.BLACK ){
-            return new ImageIcon(
-                getClass().getResource("chessImages/BlackKnight.gif")
-            );            
-        }
-        else
-        {
-            return new ImageIcon(
-                getClass().getResource("chessImages/default-Unassigned.gif")
-            );            
-        }
-    }
+		
+		/* La clase para pintar le añadia una responsabilidad extra a la pieza del knight que ya tenia
+			los movimientos por eso se decidió removerla	*/
+		/* En su lugar se creo el package PieceUI que tiene la unica responsabilidad de pintar y que englobla
+			a todas las piezas*/
 }

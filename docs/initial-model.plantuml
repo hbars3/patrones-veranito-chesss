@@ -1,0 +1,42 @@
+@startuml
+class Rook{}
+class Queen{}
+class Pawn{}
+class Knight{}
+class King{}
+class Bishop{}
+class BoardSquare{}
+class ChessGameBoard{}
+class ChessGameEngine{}
+class ChessGameLog{}
+abstract ChessGamePiece{}
+class ChessGraveyard{}
+class ChessPanel{}
+class ChessMain{}
+class ChessMenuBar
+
+ChessMain --> ChessPanel
+
+ChessPanel --> ChessMenuBar
+ChessPanel --> ChessGameBoard
+ChessPanel --> ChessGameLog
+ChessPanel --> ChessGraveyard
+ChessPanel --> ChessGameEngine
+
+ChessGameEngine --> ChessGamePiece
+ChessGameEngine ..> ChessGameBoard
+ChessGameEngine --> King
+
+ChessGamePiece ..> ChessGameBoard
+
+BoardSquare ..> ChessGamePiece
+
+ChessGamePiece <|-- King
+ChessGamePiece <|-- Knight
+ChessGamePiece <|-- Queen
+ChessGamePiece <|-- Rook
+ChessGamePiece <|-- Bishop
+ChessGamePiece <|-- Pawn
+
+ChessGameBoard --> BoardSquare
+@enduml

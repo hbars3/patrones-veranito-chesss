@@ -1,0 +1,13 @@
+@startuml
+class ChessGamePiece{}
+abstract PieceUI{
+  ImageIcon render(piece: ChessGamePiece);
+}
+class Bishop{}
+class BoardSquare{}
+
+ChessGamePiece <|-- Bishop
+ChessGamePiece --> PieceUI
+
+BoardSquare ..> ChessGamePiece
+@enduml

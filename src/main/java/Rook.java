@@ -48,19 +48,4 @@ public class Rook extends ChessGamePiece{
 			allMoves.addAll( eastMoves );
 			return allMoves;
 	}
-	/**
-	 * Creates an icon for this piece depending on the piece's color.
-	 *
-	 * @return ImageIcon the ImageIcon representation of this piece.
-	 */
-	@Override
-	public ImageIcon createImageByPieceType() {
-		icons_map = new HashMap<Integer, String>();
-
-		icons_map.put(-1, "chessImages/default-Unassigned.gif");
-		icons_map.put(ChessGamePiece.BLACK, "chessImages/BlackRook.gif");
-		icons_map.put(ChessGamePiece.WHITE, "chessImages/WhiteRook.gif");
-		
-		return new ImageIcon(getClass().getResource(this.icons_map.get(getColorOfPiece())));
-	}
 }

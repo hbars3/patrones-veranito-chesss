@@ -1,5 +1,6 @@
 import javax.swing.ImageIcon;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 // -------------------------------------------------------------------------
 /**
  * Represents a Pawn game piece. Unique in that it can move two locations on its
@@ -50,11 +51,24 @@ public class Pawn
             possibleMoves = calculatePossibleMoves( board );
             if ( ( getColorOfPiece() == ChessGamePiece.BLACK && row == 7 )
                 || ( getColorOfPiece() == ChessGamePiece.WHITE && row == 0 ) ){ // pawn has reached the end of the board, promote it to queen
-                board.getCell( row, col ).setPieceOnSquare( new Queen(
-                    board,
-                    row,
-                    col,
-                    getColorOfPiece() ) );
+                		
+								String pieza = JOptionPane.showInputDialog(null, "Seleccione su pieza");
+								switch(pieza) {
+									case "Knight":
+										board.getCell( row, col ).setPieceOnSquare( new Knight(board,row,col,getColorOfPiece() ) );
+										break;
+									case "Rook":
+										board.getCell( row, col ).setPieceOnSquare( new Rook(board,row,col,getColorOfPiece() ) );
+										break;
+									case "Bishop":
+										board.getCell( row, col ).setPieceOnSquare( new Bishop(board,row,col,getColorOfPiece() ) );
+										break;
+									case "Queen":
+										board.getCell( row, col ).setPieceOnSquare( new Queen(board,row,col,getColorOfPiece() ) );
+										break;
+									default:
+										System.out.println("pieza no valida");
+								}
             }
             return true;
         }
@@ -116,29 +130,5 @@ public class Pawn
             }
         }
         return moves;
-    }
-    /**
-     * Creates an icon for this piece depending on the piece's color.
-     *
-     * @return ImageIcon the ImageIcon representation of this piece.
-     */
-    @Override
-    public ImageIcon createImageByPieceType(){
-        if ( getColorOfPiece() == ChessGamePiece.WHITE ){
-            return new ImageIcon(
-                getClass().getResource("chessImages/WhitePawn.gif")
-            );            
-        }
-        else if ( getColorOfPiece() == ChessGamePiece.BLACK ){
-            return new ImageIcon(
-                getClass().getResource("chessImages/BlackPawn.gif")
-            );            
-        }
-        else
-        {
-            return new ImageIcon(
-                getClass().getResource("chessImages/default-Unassigned.gif")
-            );           
-        }
     }
 }
